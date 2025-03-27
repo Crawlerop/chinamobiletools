@@ -107,7 +107,7 @@ class CMIDI():
 
             elif control.uint == 0x1d: # Pitch bend
                 pitch_wheel = self._cMidiBuf[self._cMidiPos:self._cMidiPos+7]            
-                ret = mido.Message("pitchwheel", channel=self._cNoteChannel, pitch=pitch_wheel.uint)
+                ret = mido.Message("pitchwheel", channel=self._cNoteChannel, pitch=(pitch_wheel.uint << 7) - 0x2000)
                 self._cMidiPos += 7
 
             elif control.uint == 0x1c: # Volume
