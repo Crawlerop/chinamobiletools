@@ -139,7 +139,7 @@ def zz_order(data):
 
 def sjpg_to_jpg(data):
     assert data[:4] == b"SJPG"
-    width, height, components, quant = struct.unpack(">HHHH", data[4:12])
+    height, width, components, quant = struct.unpack(">HHHH", data[4:12])
     assert components == 3
 
     out = bytearray()
