@@ -37,19 +37,21 @@ if __name__ == "__main__":
         if len(tres.tres) <= 0: continue
         open(os.path.join(args.out_folder, "TRES/", f"{i+1}.bin"), "wb").write(tres.tres)
         
+    logo_id = 1
     for part in sres.post_tres:
         if part.id == "logo":
             if part.data[:3] == b"ABM":
                 i, m = sprd_abm.decompress(part.data)
                 if len(m) <= 0:
-                    i.save(os.path.join(args.out_folder, f"{part.id}.abm.png"))
+                    i.save(os.path.join(args.out_folder, f"{part.id}_{logo_id:04d}.abm.png"))
                     
                 else:
-                    i.save(os.path.join(args.out_folder, f"{part.id}.abm.png"), transparency=bytes(m))
-                    
+                    i.save(os.path.join(args.out_folder, f"{part.id}_{logo_id:04d}.abm.png"), transparency=bytes(m))
                     
             else:
-                open(os.path.join(args.out_folder, f"{part.id}.bmp"), "wb").write(bmpconverter.translate_bmp(part.data))
+                open(os.path.join(args.out_folder, f"{part.id}_{logo_id:04d}.bmp"), "wb").write(bmpconverter.translate_bmp(part.data))
+                
+            logo_id += 1
                 
         else:
             open(os.path.join(args.out_folder, f"{part.id}.bin"), "wb").write(part.data)
