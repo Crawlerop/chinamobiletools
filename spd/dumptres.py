@@ -116,7 +116,7 @@ if __name__ == "__main__":
                     else:
                         img.save(os.path.join(args.out_folder, "Icon/", f"{img_id}.abm.png"), transparency=bytes(mask))
                     
-                elif icon.type == 0x31a: # SABM
+                elif icon.type in [0x31a, 0x310]: # SABM
                     assert icon.data[:4] == b"sabm"
                     if icon.data[6]:
                         img, mask = sprd_abm.decompress(icon.data[0xc:])
@@ -158,8 +158,8 @@ if __name__ == "__main__":
                 else:
                     for i, f in enumerate(vmsplitter.load_vm(anim.data)):
                         open(os.path.join(args.out_folder, "Animation/", f"{anim_id}.vm_{i+1:04d}.bmp"), "wb").write(f)
-                
-                
+                        
+                anim_id += 1
         
         if "table" in k.data_ptr.data[2]:
             for ringtone in k.data_ptr.data[2].table:
